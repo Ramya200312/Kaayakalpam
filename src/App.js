@@ -13,11 +13,13 @@ function App() {
   return (
     <> 
     <Box
-       sx={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh", 
-        }}
+      sx={{
+      display: "flex",
+      flexDirection: "column",
+      minHeight: "100vh",
+      overflowX: "hidden", 
+      overflowY: "auto", 
+    }}
     >
       <NavBar />
       <Routes>
