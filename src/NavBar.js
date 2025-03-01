@@ -24,7 +24,7 @@ const NavBar = () => {
             Kaayakalpam
           </Typography>
           
-          {["home", "about", "our products", "why-us", "contact"].map((page) => (
+          {["home", "about", "our-products", "why-us", "contact"].map((page) => (
             <Button
               key={page}
               component={Link}
