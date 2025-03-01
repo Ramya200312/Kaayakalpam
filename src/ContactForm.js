@@ -175,21 +175,6 @@ const ContactForm = () => {
           </CardContent>
         </Card>
       </Box>
-
-      
-      <Box
-        component="footer"
-        sx={{
-          backgroundColor: "#333",
-          color: "white",
-          textAlign: "center",
-          padding: "20px",
-          width: "100%",
-          position: "relative",
-        }}
-      >
-        © 2024 Kaayakalpam Wellness. All Rights Reserved.
-      </Box>
     </Box>
   );
 };
