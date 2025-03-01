@@ -1,47 +1,105 @@
-import React from "react";
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
-import { Link, useLocation } from "react-router-dom"; 
+import React, { useState } from 'react';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
-  const location = useLocation(); 
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const navItems = ['home', 'about', 'our-products', 'why-us', 'contact'];
+
+  const toggleDrawer = (open) => () => {
+    setDrawerOpen(open);
+  };
+
+  const drawer = (
+    <Box
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+      sx={{ width: 250 }}
+    >
+      <List>
+        {navItems.map((page) => (
+          <ListItem
+            button
+            key={page}
+            component={NavLink}
+            to={`/${page}`}
+            sx={{
+              '&.active': {
+                backgroundColor: '#556B2F',
+                color: 'white',
+                fontWeight: 'bold',
+              },
+            }}
+          >
+            <ListItemText
+              primary={page.charAt(0).toUpperCase() + page.slice(1).replace('-', ' ')}
+            />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   return (
     <>
-      <AppBar
-        position="fixed" 
-        sx={{
-          top: 0,
-          left: 0,
-          width: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)", 
-          backdropFilter: "blur(10px)", 
-          boxShadow: "none",
-          zIndex: 10, 
-        }}
-      >
+      <AppBar position="fixed" sx={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', backdropFilter: 'blur(10px)' }}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Kaayakalpam
           </Typography>
-          
-          {["home", "about", "our-products", "why-us", "contact"].map((page) => (
-            <Button
-              key={page}
-              component={Link}
-              to={`/${page}`}
-              sx={{
-                color: location.pathname === `/${page}` ? "#556B2F" : "white", 
-                fontWeight: location.pathname === `/${page}` ? "bold" : "normal",
-                textDecoration: location.pathname === `/${page}` ? "underline" : "none",
-                transition: "0.3s",
-                "&:hover": { color: "#556B2F" } 
-              }}
-            >
-              {page.charAt(0).toUpperCase() + page.slice(1).replace("-", " ")} 
-            </Button>
-          ))}
+          {isMobile ? (
+            <>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={toggleDrawer(false)}
+              >
+                {drawer}
+              </Drawer>
+            </>
+          ) : (
+            navItems.map((page) => (
+              <NavLink
+                key={page}
+                to={`/${page}`}
+                style={({ isActive }) => ({
+                  color: isActive ? '#556B2F' : 'white',
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  textDecoration: isActive ? 'underline' : 'none',
+                  transition: '0.3s',
+                })}
+              >
+                {page.charAt(0).toUpperCase() + page.slice(1).replace('-', ' ')}
+              </NavLink>
+            ))
+          )}
         </Toolbar>
       </AppBar>
+      <Toolbar /> 
     </>
   );
 };
