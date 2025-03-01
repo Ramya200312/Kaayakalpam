@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import img1 from "../src/Assests/con1.webp";
 
 const Home = () => {
-  const [fullName, setFullName] = useState(""); 
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); 
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleLogin = () => {
     if (!fullName || !email || !password) {
@@ -23,7 +23,7 @@ const Home = () => {
     }
 
     setSuccess(true);
-    setError(""); 
+    setError("");
 
     console.log("Full Name:", fullName);
     console.log("Email:", email);
@@ -33,7 +33,7 @@ const Home = () => {
     setEmail("");
     setPassword("");
 
-    setTimeout(() => setSuccess(false), 3000); 
+    setTimeout(() => setSuccess(false), 3000);
   };
 
   return (
@@ -41,10 +41,14 @@ const Home = () => {
       maxWidth="xl"
       sx={{
         position: "relative",
-        height: "100vh",
-        overflow: "hidden",
-        p: 4,
-        paddingTop: "80px",
+        zIndex: 1,
+        height: "100vh", 
+        minHeight: "100vh",
+        display: "flex", 
+        flexDirection: "column", 
+        overflow: "hidden", 
+        p: { xs: 2, md: 4 },
+        paddingTop: { xs: "60px", md: "80px" },
         "&::before": {
           content: '""',
           position: "absolute",
@@ -55,32 +59,45 @@ const Home = () => {
           backgroundImage: `url(${img1})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           filter: "blur(10px)",
           zIndex: -1,
         },
       }}
     >
-      <Grid container sx={{ height: "100%", overflow: "hidden" }}>
+     <Grid container sx={{ height: "100%", flexGrow: 1 }} spacing={3}>
         
-        <Grid item xs={12} md={6}>
-          <Typography variant="h2" sx={{ fontWeight: "bold", color: "#222" }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{ textAlign: { xs: "center", md: "left" } }}
+        >
+          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#222" }}>
             Kaayakalpam Wellness
           </Typography>
-          <Typography variant="h5" sx={{ color: "#444", mt: 1 }}>
+          <Typography variant="h6" sx={{ color: "#444", mt: 1 }}>
             Traditional Healing for a Healthy Life
           </Typography>
           <Typography>Your Path to Holistic Well-Being.</Typography>
 
-          
-          <Card sx={{ mt: 3, p: 2, background: "#2e7d32", color: "#fff", maxWidth: "120px", textAlign: "center" }}>
-            <Typography variant="h4">⭐ 4.8</Typography>
+          <Card
+            sx={{
+              mt: 3,
+              p: 2,
+              background: "#2e7d32",
+              color: "#fff",
+              maxWidth: "140px",
+              textAlign: "center",
+              mx: { xs: "auto", md: 0 },
+            }}
+          >
+            <Typography variant="h5">⭐ 4.8</Typography>
             <Typography variant="body2">357 Reviews</Typography>
           </Card>
         </Grid>
-
-        
+ 
         <Grid item xs={12} md={6} sx={{ position: "relative" }}>
-          
           {success && (
             <Box
               sx={{
@@ -97,16 +114,23 @@ const Home = () => {
                 zIndex: 2,
               }}
             >
-               Login Successful!
+              Login Successful!
             </Box>
           )}
 
-          <Card sx={{ p: 3, borderRadius: "12px", boxShadow: 4, maxWidth: "400px", mx: "auto" }}>
-            <Typography variant="h5" sx={{ mb: 2 }}>
+          <Card
+            sx={{
+              p: { xs: 2, md: 3 },
+              borderRadius: "12px",
+              boxShadow: 4,
+              maxWidth: "400px",
+              mx: "auto",
+            }}
+          >
+            <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
               Get a Consultation
             </Typography>
 
-            
             {error && (
               <Box sx={{ color: "red", mb: 2, textAlign: "center", fontWeight: "bold" }}>
                 {error}
@@ -118,7 +142,7 @@ const Home = () => {
               label="Full Name"
               variant="outlined"
               sx={{ mb: 2 }}
-              value={fullName} 
+              value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
             <TextField
@@ -147,7 +171,7 @@ const Home = () => {
               fullWidth
               sx={{
                 mt: 2,
-                backgroundColor: "#2e7d32", 
+                backgroundColor: "#2e7d32",
                 "&:hover": { backgroundColor: "#1b5e20" },
               }}
               onClick={handleLogin}
